@@ -122,26 +122,30 @@
                         <div class="space-y-6">
                             <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-red-500">
                                 <div class="text-[9px] font-black text-red-500 mb-2 uppercase italic">Bán Kết 1</div>
-                                <div class="flex justify-between items-center text-sm font-bold py-1 border-b">
-                                    <span id="sf1-team1-label" class="text-xs">Nhất Bảng A</span>
-                                    <input type="number" id="sf1-s1" onchange="updateKnockoutScore('sf1-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
-                                </div>
-                                <div class="flex justify-between items-center text-sm font-bold py-1">
-                                    <span id="sf1-team2-label" class="text-xs">Nhì Bảng B</span>
-                                    <input type="number" id="sf1-s2" onchange="updateKnockoutScore('sf1-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                <div class="flex flex-col space-y-2">
+                                    <div class="flex justify-between items-center text-[11px] font-bold py-1 border-b">
+                                        <span id="sf1-team1-label" class="pr-2 text-gray-700">Nhất Bảng A</span>
+                                        <input type="number" id="sf1-s1" onchange="updateKnockoutScore('sf1-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                    </div>
+                                    <div class="flex justify-between items-center text-[11px] font-bold py-1">
+                                        <span id="sf1-team2-label" class="pr-2 text-gray-700">Nhì Bảng B</span>
+                                        <input type="number" id="sf1-s2" onchange="updateKnockoutScore('sf1-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Semi Final 2 -->
                             <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-slate-700">
                                 <div class="text-[9px] font-black text-slate-500 mb-2 uppercase italic">Bán Kết 2</div>
-                                <div class="flex justify-between items-center text-sm font-bold py-1 border-b">
-                                    <span id="sf2-team1-label" class="text-xs">Nhất Bảng B</span>
-                                    <input type="number" id="sf2-s1" onchange="updateKnockoutScore('sf2-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
-                                </div>
-                                <div class="flex justify-between items-center text-sm font-bold py-1">
-                                    <span id="sf2-team2-label" class="text-xs">Nhì Bảng A</span>
-                                    <input type="number" id="sf2-s2" onchange="updateKnockoutScore('sf2-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                <div class="flex flex-col space-y-2">
+                                    <div class="flex justify-between items-center text-[11px] font-bold py-1 border-b">
+                                        <span id="sf2-team1-label" class="pr-2 text-gray-700">Nhất Bảng B</span>
+                                        <input type="number" id="sf2-s1" onchange="updateKnockoutScore('sf2-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                    </div>
+                                    <div class="flex justify-between items-center text-[11px] font-bold py-1">
+                                        <span id="sf2-team2-label" class="pr-2 text-gray-700">Nhì Bảng A</span>
+                                        <input type="number" id="sf2-s2" onchange="updateKnockoutScore('sf2-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,13 +157,13 @@
                                     <div class="oswald text-red-600 text-3xl font-black mb-2 tracking-tighter">CHUNG KẾT</div>
                                     <div class="text-[10px] font-bold uppercase text-gray-400">Tranh Ngôi Vô Địch</div>
                                     <div class="my-4 space-y-3">
-                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight h-8 flex items-center justify-center" id="final-t1">Thắng BK1</div>
+                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight min-h-8 flex items-center justify-center px-1" id="final-t1">Thắng BK1</div>
                                         <div class="flex items-center justify-center space-x-2">
                                             <input type="number" id="f-s1" onchange="updateKnockoutScore('f-s1', this.value)" class="w-10 h-10 bg-slate-800 text-yellow-400 text-center font-bold rounded text-lg" value="0">
                                             <span class="text-red-600 font-black">-</span>
                                             <input type="number" id="f-s2" onchange="updateKnockoutScore('f-s2', this.value)" class="w-10 h-10 bg-slate-800 text-yellow-400 text-center font-bold rounded text-lg" value="0">
                                         </div>
-                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight h-8 flex items-center justify-center" id="final-t2">Thắng BK2</div>
+                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight min-h-8 flex items-center justify-center px-1" id="final-t2">Thắng BK2</div>
                                     </div>
                                 </div>
                             </div>
@@ -172,11 +176,11 @@
                                 <div class="text-xs font-bold text-black italic text-center">Tranh Hạng 3</div>
                                 <div class="mt-3 space-y-2">
                                     <div class="flex flex-col border-b border-black/10 pb-2">
-                                        <div id="bronze-t1" class="text-[9px] font-black uppercase truncate mb-1 text-center">Thua BK1</div>
+                                        <div id="bronze-t1" class="text-[9px] font-black uppercase mb-1 text-center whitespace-normal min-h-[24px] flex items-center justify-center">Thua BK1</div>
                                         <div class="flex justify-center"><input type="number" id="b-s1" onchange="updateKnockoutScore('b-s1', this.value)" class="w-8 h-6 bg-white/50 text-center rounded text-xs font-bold" value="0"></div>
                                     </div>
                                     <div class="flex flex-col">
-                                        <div id="bronze-t2" class="text-[9px] font-black uppercase truncate mb-1 text-center">Thua BK2</div>
+                                        <div id="bronze-t2" class="text-[9px] font-black uppercase mb-1 text-center whitespace-normal min-h-[24px] flex items-center justify-center">Thua BK2</div>
                                         <div class="flex justify-center"><input type="number" id="b-s2" onchange="updateKnockoutScore('b-s2', this.value)" class="w-8 h-6 bg-white/50 text-center rounded text-xs font-bold" value="0"></div>
                                     </div>
                                 </div>
@@ -338,10 +342,10 @@
             currentSF1.t1 = rankA[0]; currentSF1.t2 = rankB[1];
             currentSF2.t1 = rankB[0]; currentSF2.t2 = rankA[1];
 
-            document.getElementById('sf1-team1-label').innerText = rankA[0].id + " (" + rankA[0].name.split('–')[0].trim().split(' ')[0] + "...)";
-            document.getElementById('sf1-team2-label').innerText = rankB[1].id + " (" + rankB[1].name.split('–')[0].trim().split(' ')[0] + "...)";
-            document.getElementById('sf2-team1-label').innerText = rankB[0].id + " (" + rankB[0].name.split('–')[0].trim().split(' ')[0] + "...)";
-            document.getElementById('sf2-team2-label').innerText = rankA[1].id + " (" + rankA[1].name.split('–')[0].trim().split(' ')[0] + "...)";
+            document.getElementById('sf1-team1-label').innerText = rankA[0].id + ": " + rankA[0].name;
+            document.getElementById('sf1-team2-label').innerText = rankB[1].id + ": " + rankB[1].name;
+            document.getElementById('sf2-team1-label').innerText = rankB[0].id + ": " + rankB[0].name;
+            document.getElementById('sf2-team2-label').innerText = rankA[1].id + ": " + rankA[1].name;
 
             updateFinalsFromScores();
         }
@@ -352,26 +356,36 @@
             const s2_1 = knockoutScores['sf2-s1'];
             const s2_2 = knockoutScores['sf2-s2'];
 
+            // Cập nhật Chung kết & Tranh hạng 3 từ Bán kết 1
             if (s1_1 !== 0 || s1_2 !== 0) {
                 if (s1_1 > s1_2) {
                     setTeamText('final-t1', currentSF1.t1);
-                    setTeamText('bronze-t1', currentSF1.t2);
+                    setTeamText('bronze-t1', currentSF1.t2); // Thua BK1
                 } else if (s1_2 > s1_1) {
                     setTeamText('final-t1', currentSF1.t2);
-                    setTeamText('bronze-t1', currentSF1.t1);
+                    setTeamText('bronze-t1', currentSF1.t1); // Thua BK1
+                } else {
+                    // Hòa (tạm thời để Nhất BK đi tiếp)
+                    setTeamText('final-t1', currentSF1.t1);
+                    setTeamText('bronze-t1', currentSF1.t2);
                 }
             } else {
                 document.getElementById('final-t1').innerText = "Thắng BK1";
                 document.getElementById('bronze-t1').innerText = "Thua BK1";
             }
 
+            // Cập nhật Chung kết & Tranh hạng 3 từ Bán kết 2
             if (s2_1 !== 0 || s2_2 !== 0) {
                 if (s2_1 > s2_2) {
                     setTeamText('final-t2', currentSF2.t1);
-                    setTeamText('bronze-t2', currentSF2.t2);
+                    setTeamText('bronze-t2', currentSF2.t2); // Thua BK2
                 } else if (s2_2 > s2_1) {
                     setTeamText('final-t2', currentSF2.t2);
-                    setTeamText('bronze-t2', currentSF2.t1);
+                    setTeamText('bronze-t2', currentSF2.t1); // Thua BK2
+                } else {
+                    // Hòa
+                    setTeamText('final-t2', currentSF2.t1);
+                    setTeamText('bronze-t2', currentSF2.t2);
                 }
             } else {
                 document.getElementById('final-t2').innerText = "Thắng BK2";
@@ -380,8 +394,8 @@
         }
 
         function setTeamText(elementId, team) {
-            const name = team.name.split('–')[0].trim();
-            document.getElementById(elementId).innerText = team.id + ": " + name;
+            if (!team) return;
+            document.getElementById(elementId).innerText = team.id + ": " + team.name;
         }
 
         window.onload = init;
