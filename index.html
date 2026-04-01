@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Giải Cầu Lông Viettel Software - Đôi Nam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="py-6 px-4 md:px-8">
+
+    <div class="max-w-[1400px] mx-auto relative z-10">
+        
+        <!-- Header Section -->
+        <header class="dynamic-bg rounded-3xl shadow-2xl mb-12 p-8 md:p-12 text-center text-white">
+            <div class="flex flex-col items-center mb-6">
+                <div class="flex items-baseline space-x-2 bg-white/10 px-6 py-2 rounded-full backdrop-blur-md">
+                    <span class="oswald font-black text-2xl tracking-tighter">VIETTEL</span>
+                    <span class="oswald font-light text-2xl tracking-wide opacity-90">SOFTWARE</span>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-8xl oswald font-black uppercase italic glow-text tracking-tighter">GIẢI CẦU LÔNG</h1>
+            <div class="mt-4 bg-yellow-400 text-black px-4 py-1 font-black text-sm rounded shadow-lg inline-block">ĐÔI NAM 2026</div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Rankings Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+                <section class="card-glass rounded-2xl overflow-hidden">
+                    <div class="bg-red-600 p-4 text-white font-bold oswald text-xl uppercase italic">Bảng Xếp Hạng A</div>
+                    <div id="ranking-a" class="p-4 space-y-2"></div>
+                </section>
+
+                <section class="card-glass rounded-2xl overflow-hidden">
+                    <div class="bg-slate-800 p-4 text-white font-bold oswald text-xl uppercase italic">Bảng Xếp Hạng B</div>
+                    <div id="ranking-b" class="p-4 space-y-2"></div>
+                </section>
+                
+                <button onclick="resetData()" class="w-full py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition-all text-sm uppercase tracking-wider">
+                    Xóa toàn bộ dữ liệu (Reset)
+                </button>
+            </div>
+
+            <!-- Score Input & Finals -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- Group Stage Score Updates -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <div class="p-5 bg-white border-b flex justify-between items-center">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="oswald text-2xl font-black text-red-600 uppercase italic">Cập nhật tỉ số các trận</h3>
+                            <span class="bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-bold">CẬP NHẬT TẠI CHỖ</span>
+                        </div>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4" id="match-inputs"></div>
+                </div>
+
+                <!-- Finals Bracket -->
+                <div class="card-glass rounded-2xl p-6 bg-gradient-to-br from-white to-gray-50">
+                    <h3 class="oswald text-2xl font-black text-gray-800 uppercase italic mb-8 border-b-2 border-red-600 inline-block">Sơ Đồ Vòng Chung Kết</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Semi Final 1 -->
+                        <div class="space-y-6">
+                            <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-red-500">
+                                <div class="text-[9px] font-black text-red-500 mb-2 uppercase italic">Bán Kết 1</div>
+                                <div class="flex justify-between items-center text-sm font-bold py-1 border-b">
+                                    <span id="sf1-team1-label" class="text-xs">Nhất Bảng A</span>
+                                    <input type="number" id="sf1-s1" onchange="updateKnockoutScore('sf1-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                </div>
+                                <div class="flex justify-between items-center text-sm font-bold py-1">
+                                    <span id="sf1-team2-label" class="text-xs">Nhì Bảng B</span>
+                                    <input type="number" id="sf1-s2" onchange="updateKnockoutScore('sf1-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                </div>
+                            </div>
+
+                            <!-- Semi Final 2 -->
+                            <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-slate-700">
+                                <div class="text-[9px] font-black text-slate-500 mb-2 uppercase italic">Bán Kết 2</div>
+                                <div class="flex justify-between items-center text-sm font-bold py-1 border-b">
+                                    <span id="sf2-team1-label" class="text-xs">Nhất Bảng B</span>
+                                    <input type="number" id="sf2-s1" onchange="updateKnockoutScore('sf2-s1', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                </div>
+                                <div class="flex justify-between items-center text-sm font-bold py-1">
+                                    <span id="sf2-team2-label" class="text-xs">Nhì Bảng A</span>
+                                    <input type="number" id="sf2-s2" onchange="updateKnockoutScore('sf2-s2', this.value)" class="w-8 text-center bg-gray-100 rounded" value="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final Match -->
+                        <div class="flex flex-col justify-center">
+                            <div class="bg-red-600 p-1 rounded-2xl shadow-2xl scale-110">
+                                <div class="bg-white rounded-xl p-6 text-center">
+                                    <div class="oswald text-red-600 text-3xl font-black mb-2 tracking-tighter">CHUNG KẾT</div>
+                                    <div class="text-[10px] font-bold uppercase text-gray-400">Tranh Ngôi Vô Địch</div>
+                                    <div class="my-4 space-y-3">
+                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight h-8 flex items-center justify-center" id="final-t1">Thắng BK1</div>
+                                        <div class="flex items-center justify-center space-x-2">
+                                            <input type="number" id="f-s1" onchange="updateKnockoutScore('f-s1', this.value)" class="w-10 h-10 bg-slate-800 text-yellow-400 text-center font-bold rounded text-lg" value="0">
+                                            <span class="text-red-600 font-black">-</span>
+                                            <input type="number" id="f-s2" onchange="updateKnockoutScore('f-s2', this.value)" class="w-10 h-10 bg-slate-800 text-yellow-400 text-center font-bold rounded text-lg" value="0">
+                                        </div>
+                                        <div class="text-[10px] font-black uppercase text-red-600 leading-tight h-8 flex items-center justify-center" id="final-t2">Thắng BK2</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bronze Match -->
+                        <div class="flex flex-col justify-center space-y-4">
+                            <div class="bg-yellow-400 p-4 rounded-xl shadow-md">
+                                <div class="text-[10px] font-black text-black/60 uppercase">Bronze Match</div>
+                                <div class="text-xs font-bold text-black italic text-center">Tranh Hạng 3</div>
+                                <div class="mt-3 space-y-2">
+                                    <div class="flex flex-col border-b border-black/10 pb-2">
+                                        <div id="bronze-t1" class="text-[9px] font-black uppercase truncate mb-1 text-center">Thua BK1</div>
+                                        <div class="flex justify-center"><input type="number" id="b-s1" onchange="updateKnockoutScore('b-s1', this.value)" class="w-8 h-6 bg-white/50 text-center rounded text-xs font-bold" value="0"></div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div id="bronze-t2" class="text-[9px] font-black uppercase truncate mb-1 text-center">Thua BK2</div>
+                                        <div class="flex justify-center"><input type="number" id="b-s2" onchange="updateKnockoutScore('b-s2', this.value)" class="w-8 h-6 bg-white/50 text-center rounded text-xs font-bold" value="0"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
