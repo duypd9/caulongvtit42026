@@ -6,7 +6,63 @@
     <title>Banner Giải Cầu Lông Viettel Software - Đôi Nam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --viettel-red: #ee0000;
+            --viettel-dark: #b30000;
+            --accent-yellow: #ffcc00;
+        }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #f1f5f9; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(238, 0, 0, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 0, 0, 0.05) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+        .oswald { font-family: 'Oswald', sans-serif; }
+        
+        .dynamic-bg {
+            background: linear-gradient(135deg, var(--viettel-red) 0%, var(--viettel-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .dynamic-bg::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 120%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(255,255,255,0.05) 100px, rgba(255,255,255,0.05) 200px);
+            transform: rotate(-15deg);
+        }
+
+        .card-glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .score-input {
+            width: 45px; height: 35px;
+            background: #1e293b; color: #fbbf24;
+            text-align: center; border-radius: 6px;
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 700;
+            border: none; outline: none;
+        }
+        .score-input:focus { ring: 2px solid var(--accent-yellow); }
+
+        .player-tag { border-left: 3px solid transparent; transition: all 0.2s; }
+        .player-tag.active { border-left: 3px solid var(--viettel-red); background: white; }
+
+        .glow-text { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+        
+        @media (max-width: 768px) {
+            .score-input { width: 38px; height: 32px; font-size: 1rem; }
+        }
+    </style>
 </head>
 <body class="py-6 px-4 md:px-8">
 
@@ -133,6 +189,202 @@
 
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Data Configuration
+        const DEFAULT_TEAMS_A = [
+            { id: 'A1', name: 'Tạ Hữu Anh – Nguyễn Nhật Quang' },
+            { id: 'A2', name: 'Nguyễn Văn Huy – Vũ Quang Hưng' },
+            { id: 'A3', name: 'Đinh Anh Tuân – Nguyễn Cao Kỳ' },
+            { id: 'A4', name: 'Nguyễn Bá Ngọc – Nguyễn Xuân Trường' },
+            { id: 'A5', name: 'Nguyễn Xuân Phú – Nguyễn Đức Thắng' }
+        ];
+
+        const DEFAULT_TEAMS_B = [
+            { id: 'B1', name: 'Hà Thanh Lâm – Phạm Đức Duy' },
+            { id: 'B2', name: 'Nguyễn Đức Trí – Nguyễn Thanh Thiên' },
+            { id: 'B3', name: 'Phùng Đình Tuấn – Vũ Văn Trung' },
+            { id: 'B4', name: 'Đàm Tuấn Khang – Tô Duy Tường' },
+            { id: 'B5', name: 'Nguyễn Mạnh Hùng – Dư Văn An' }
+        ];
+
+        let fixtures = [
+            { t1: 'A1', t2: 'A2', s1: 0, s2: 0 }, { t1: 'B1', t2: 'B2', s1: 0, s2: 0 }, { t1: 'A3', t2: 'A4', s1: 0, s2: 0 },
+            { t1: 'B3', t2: 'B4', s1: 0, s2: 0 }, { t1: 'A1', t2: 'A3', s1: 0, s2: 0 }, { t1: 'B1', t2: 'B3', s1: 0, s2: 0 },
+            { t1: 'A2', t2: 'A5', s1: 0, s2: 0 }, { t1: 'B2', t2: 'B5', s1: 0, s2: 0 }, { t1: 'A4', t2: 'A5', s1: 0, s2: 0 },
+            { t1: 'B1', t2: 'B4', s1: 0, s2: 0 }, { t1: 'A1', t2: 'A4', s1: 0, s2: 0 }, { t1: 'B3', t2: 'B5', s1: 0, s2: 0 },
+            { t1: 'A2', t2: 'A3', s1: 0, s2: 0 }, { t1: 'B2', t2: 'B3', s1: 0, s2: 0 }, { t1: 'A3', t2: 'A5', s1: 0, s2: 0 }
+        ];
+
+        let knockoutScores = {
+            'sf1-s1': 0, 'sf1-s2': 0,
+            'sf2-s1': 0, 'sf2-s2': 0,
+            'f-s1': 0, 'f-s2': 0,
+            'b-s1': 0, 'b-s2': 0
+        };
+
+        let currentSF1 = { t1: null, t2: null };
+        let currentSF2 = { t1: null, t2: null };
+
+        // Persistence Logic
+        function saveData() {
+            localStorage.setItem('badminton_fixtures_2026', JSON.stringify(fixtures));
+            localStorage.setItem('badminton_knockout_2026', JSON.stringify(knockoutScores));
+        }
+
+        function loadData() {
+            const savedFixtures = localStorage.getItem('badminton_fixtures_2026');
+            const savedKnockout = localStorage.getItem('badminton_knockout_2026');
+            if (savedFixtures) fixtures = JSON.parse(savedFixtures);
+            if (savedKnockout) {
+                knockoutScores = JSON.parse(savedKnockout);
+                Object.keys(knockoutScores).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = knockoutScores[id];
+                });
+            }
+        }
+
+        function resetData() {
+            if(confirm("Xóa toàn bộ điểm số để bắt đầu lại?")) {
+                localStorage.removeItem('badminton_fixtures_2026');
+                localStorage.removeItem('badminton_knockout_2026');
+                location.reload();
+            }
+        }
+
+        // Calculation & UI Update
+        function init() {
+            loadData();
+            renderMatches();
+            calculateRankings();
+        }
+
+        function renderMatches() {
+            const container = document.getElementById('match-inputs');
+            container.innerHTML = '';
+            fixtures.forEach((match, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-sm";
+                div.innerHTML = `
+                    <div class="w-8 font-black text-xs text-gray-400">${match.t1}</div>
+                    <div class="flex items-center space-x-2">
+                        <input type="number" value="${match.s1}" onchange="updateScore(${index}, 1, this.value)" class="score-input">
+                        <div class="text-gray-300 font-bold">:</div>
+                        <input type="number" value="${match.s2}" onchange="updateScore(${index}, 2, this.value)" class="score-input">
+                    </div>
+                    <div class="w-8 font-black text-xs text-gray-400 text-right">${match.t2}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateScore(index, teamPos, val) {
+            const value = parseInt(val) || 0;
+            if (teamPos === 1) fixtures[index].s1 = value;
+            else fixtures[index].s2 = value;
+            saveData();
+            calculateRankings();
+        }
+
+        function updateKnockoutScore(id, val) {
+            knockoutScores[id] = parseInt(val) || 0;
+            saveData();
+            updateFinalsFromScores();
+        }
+
+        function calculateRankings() {
+            const stats = {};
+            [...DEFAULT_TEAMS_A, ...DEFAULT_TEAMS_B].forEach(t => {
+                stats[t.id] = { id: t.id, name: t.name, wins: 0, diff: 0 };
+            });
+
+            fixtures.forEach(m => {
+                if (m.s1 !== 0 || m.s2 !== 0) {
+                    if (m.s1 > m.s2) stats[m.t1].wins += 1;
+                    else if (m.s2 > m.s1) stats[m.t2].wins += 1;
+                    stats[m.t1].diff += (m.s1 - m.s2);
+                    stats[m.t2].diff += (m.s2 - m.s1);
+                }
+            });
+
+            const rankA = DEFAULT_TEAMS_A.map(t => stats[t.id]).sort((a, b) => b.wins - a.wins || b.diff - a.diff);
+            const rankB = DEFAULT_TEAMS_B.map(t => stats[t.id]).sort((a, b) => b.wins - a.wins || b.diff - a.diff);
+
+            displayRankings('ranking-a', rankA, 'A');
+            displayRankings('ranking-b', rankB, 'B');
+            updateFinalsBracket(rankA, rankB);
+        }
+
+        function displayRankings(elementId, ranks, prefix) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+            ranks.forEach((team, i) => {
+                const div = document.createElement('div');
+                div.className = `player-tag flex items-start p-2 rounded-lg ${i < 2 ? 'bg-yellow-50 active' : 'bg-gray-50'}`;
+                div.innerHTML = `
+                    <span class="w-8 font-black text-xs pt-1 text-red-600">${prefix}${i+1}.</span>
+                    <div class="flex-1">
+                        <div class="text-[11px] font-bold text-gray-800 leading-tight">${team.name}</div>
+                        <div class="text-[9px] text-gray-500 font-bold mt-1">
+                            Thắng: <span class="text-red-600 font-black">${team.wins}</span> | Hiệu số: <span class="text-blue-600 font-black">${team.diff > 0 ? '+' + team.diff : team.diff}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateFinalsBracket(rankA, rankB) {
+            currentSF1.t1 = rankA[0]; currentSF1.t2 = rankB[1];
+            currentSF2.t1 = rankB[0]; currentSF2.t2 = rankA[1];
+
+            document.getElementById('sf1-team1-label').innerText = rankA[0].id + " (" + rankA[0].name.split('–')[0].trim().split(' ')[0] + "...)";
+            document.getElementById('sf1-team2-label').innerText = rankB[1].id + " (" + rankB[1].name.split('–')[0].trim().split(' ')[0] + "...)";
+            document.getElementById('sf2-team1-label').innerText = rankB[0].id + " (" + rankB[0].name.split('–')[0].trim().split(' ')[0] + "...)";
+            document.getElementById('sf2-team2-label').innerText = rankA[1].id + " (" + rankA[1].name.split('–')[0].trim().split(' ')[0] + "...)";
+
+            updateFinalsFromScores();
+        }
+
+        function updateFinalsFromScores() {
+            const s1_1 = knockoutScores['sf1-s1'];
+            const s1_2 = knockoutScores['sf1-s2'];
+            const s2_1 = knockoutScores['sf2-s1'];
+            const s2_2 = knockoutScores['sf2-s2'];
+
+            if (s1_1 !== 0 || s1_2 !== 0) {
+                if (s1_1 > s1_2) {
+                    setTeamText('final-t1', currentSF1.t1);
+                    setTeamText('bronze-t1', currentSF1.t2);
+                } else if (s1_2 > s1_1) {
+                    setTeamText('final-t1', currentSF1.t2);
+                    setTeamText('bronze-t1', currentSF1.t1);
+                }
+            } else {
+                document.getElementById('final-t1').innerText = "Thắng BK1";
+                document.getElementById('bronze-t1').innerText = "Thua BK1";
+            }
+
+            if (s2_1 !== 0 || s2_2 !== 0) {
+                if (s2_1 > s2_2) {
+                    setTeamText('final-t2', currentSF2.t1);
+                    setTeamText('bronze-t2', currentSF2.t2);
+                } else if (s2_2 > s2_1) {
+                    setTeamText('final-t2', currentSF2.t2);
+                    setTeamText('bronze-t2', currentSF2.t1);
+                }
+            } else {
+                document.getElementById('final-t2').innerText = "Thắng BK2";
+                document.getElementById('bronze-t2').innerText = "Thua BK2";
+            }
+        }
+
+        function setTeamText(elementId, team) {
+            const name = team.name.split('–')[0].trim();
+            document.getElementById(elementId).innerText = team.id + ": " + name;
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
